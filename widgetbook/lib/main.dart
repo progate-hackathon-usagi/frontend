@@ -8,7 +8,7 @@ void main() {
   runApp(const WidgetbookApp());
 }
 
-@widgetbook.App)
+@widgetbook.App()
 class WidgetbookApp extends StatelessWidget {
   const WidgetbookApp({super.key});
 
