@@ -1,33 +1,39 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ExerciseCard extends StatelessWidget {
   final int year;
   final int month;
+  final List<bool> isExercisedList;
 
-  const ExerciseCard({super.key, required this.year, required this.month});
+  const ExerciseCard(
+      {super.key,
+      required this.year,
+      required this.month,
+      required this.isExercisedList});
 
   @override
   Widget build(BuildContext context) {
-    int daysInMonth = DateTime(year, month + 1, 0).day;
-
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('$year年 $month月', style: const TextStyle(fontSize: 20)),
+            Text('$year年 $month月', style: const TextStyle(fontSize: 36)),
             GridView.builder(
               shrinkWrap: true, // 高さをコンテンツに合わせる
-              physics: const NeverScrollableScrollPhysics(), // スクロール無効
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 7,
               ),
-              itemCount: daysInMonth,
+              itemCount: isExercisedList.length,
               itemBuilder: (context, index) {
                 DateTime date = DateTime(year, month, index + 1);
-                bool isDone = false;
+                bool isDone = isExercisedList[index];
+
                 return GridTile(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -51,5 +57,12 @@ class ExerciseCard extends StatelessWidget {
   type: ExerciseCard,
 )
 ExerciseCard exerciseCard(BuildContext context) {
-  return const ExerciseCard(year: 2024, month: 8);
+  const year = 2024;
+  const month = 8;
+  final isExercisedList = List.generate(31, (index) => Random().nextBool());
+  return ExerciseCard(
+    year: year,
+    month: month,
+    isExercisedList: isExercisedList,
+  );
 }
