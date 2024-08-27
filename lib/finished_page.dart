@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RoomPage extends StatelessWidget {
-  const RoomPage({super.key});
+class FinishedPage extends StatelessWidget {
+  const FinishedPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +11,11 @@ class RoomPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/finished");
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/lobby", (_) => false);
             },
             // for debug
-            child: const Text("ラジオ体操を終了する")),
+            child: const Text("ホームへ戻る")),
       ),
     );
   }
