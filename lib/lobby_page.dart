@@ -25,7 +25,7 @@ class LobbyPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // TODO: ルーム画面へ
+            Navigator.pushNamed(context, '/waiting');
           },
           child: const Column(
             mainAxisSize: MainAxisSize.min,
