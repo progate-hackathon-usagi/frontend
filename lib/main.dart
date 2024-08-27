@@ -6,6 +6,7 @@ import 'package:frontend/pages/room_page.dart';
 import 'package:frontend/pages/waiting_page.dart';
 
 void main() {
+  const envFile = String.fromEnvironment('ENV_FILE');
   runApp(const MainApp());
 }
 
