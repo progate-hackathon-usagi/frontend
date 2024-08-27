@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/pages/finished_page.dart';
 import 'package:frontend/pages/lobby_page.dart';
 import 'package:frontend/pages/profile_page.dart';
 import 'package:frontend/pages/room_page.dart';
 import 'package:frontend/pages/waiting_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
-  const envFile = String.fromEnvironment('ENV_FILE');
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: dotenv.get("SUPABASE_URL"),
+    anonKey: dotenv.get("SUPABASE_ANON_KEY"),
+  );
+
   runApp(const MainApp());
 }
 
