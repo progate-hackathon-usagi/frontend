@@ -5,8 +5,6 @@ class WaitingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const headingTextStyle = TextStyle(fontSize: 36, color: Colors.black);
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
