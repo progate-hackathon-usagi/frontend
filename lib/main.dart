@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/finished_page.dart';
-import 'package:frontend/lobby_page.dart';
-import 'package:frontend/room_page.dart';
-import 'package:frontend/waiting_page.dart';
+import 'package:frontend/pages/finished_page.dart';
+import 'package:frontend/pages/lobby_page.dart';
+import 'package:frontend/pages/room_page.dart';
+import 'package:frontend/pages/waiting_page.dart';
 
 void main() {
   runApp(const MainApp());
