@@ -10,16 +10,13 @@ class LobbyPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Container(
-            width: 100,
-            height: 100,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: NetworkImage(
-                      'https://via.placeholder.com/350x350?text=sample')),
-            ),
-          )
+          IconButton(
+            iconSize: 50,
+            icon: Icon(Icons.person),
+            onPressed: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+          ),
         ],
       ),
       body: Center(
