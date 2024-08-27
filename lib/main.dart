@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/lobby_page.dart';
+import 'package:frontend/room_page.dart';
 import 'package:frontend/waiting_page.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MainApp extends StatelessWidget {
       home: const LobbyPage(),
       routes: <String, WidgetBuilder>{
         "/waiting": (BuildContext context) => WaitingPage(context),
+        "/room": (BuildContext context) => RoomPage(),
       },
     );
   }

@@ -19,9 +19,10 @@ class WaitingPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
             onPressed: () {
-              // TODO: ラジオ体操ページへ
+              Navigator.pushNamed(context, '/room');
             },
-            child: const Text("Go to next page")),
+            // for debug
+            child: const Text("ラジオ体操へ")),
       ),
     );
   }
