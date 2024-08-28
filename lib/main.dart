@@ -27,6 +27,7 @@ class MainApp extends StatelessWidget {
           ? const SigninPage()
           : const LobbyPage(),
       routes: <String, WidgetBuilder>{
+        "/signin": (BuildContext context) => const SigninPage(),
         "/lobby": (BuildContext context) => const LobbyPage(),
         "/profile": (BuildContext context) => const ProfilePage(),
         "/waiting": (BuildContext context) => WaitingPage(context),
