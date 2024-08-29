@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:frontend/widgets/lobby_page.dart';
 import 'package:frontend/widgets/finished_page.dart';
 import 'package:frontend/widgets/signin_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +13,11 @@ Future<void> main() async {
     anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
   );
 
-  runApp(const MainApp());
+  runApp(
+    const ProviderScope(
+      child: MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
