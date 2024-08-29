@@ -11,14 +11,15 @@ class RoomPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-            onPressed: () async {
-              await channel.untrack();
+          onPressed: () async {
+            await channel.untrack();
 
-              if(!context.mounted) return;
-              Navigator.pushNamed(context, "/finished");
-            },
-            // for debug
-            child: const Text("ラジオ体操を終了する")),
+            if (!context.mounted) return;
+            Navigator.pushNamed(context, "/finished");
+          },
+          // for debug
+          child: const Text("ラジオ体操を終了する"),
+        ),
       ),
     );
   }

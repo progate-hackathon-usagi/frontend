@@ -14,7 +14,17 @@ class SigninViewModel extends StateNotifier<bool> {
 
   SigninViewModel(super.state);
 
-  Future<void> signIn() async {
+  void listenToStateChanges(BuildContext context) {
+    addListener((state) {
+      if (state) {
+        navigateToLobby(context);
+      }
+    });
+  }
+
+  Future<void> signIn(BuildContext context) async {
+    listenToStateChanges(context);
+
     final GoogleSignIn googleSignIn = GoogleSignIn(
       serverClientId: webClientId,
     );

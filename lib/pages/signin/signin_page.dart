@@ -9,10 +9,6 @@ class SigninPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewmodel = ref.watch(SigninViewModelProvider.notifier);
 
-    ref.listen(SigninViewModelProvider, (previousState, isSuccess) {
-      if (isSuccess) viewmodel.navigateToLobby(context);
-    });
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -21,7 +17,7 @@ class SigninPage extends ConsumerWidget {
             const Text("Sign in"),
             ElevatedButton(
               onPressed: () {
-                viewmodel.signIn();
+                viewmodel.signIn(context);
               },
               child: const Text("Sign in with Google"),
             ),
