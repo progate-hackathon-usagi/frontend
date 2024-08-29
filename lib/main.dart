@@ -25,6 +25,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final supabase = Supabase.instance.client;
+
     return MaterialApp(
       home: supabase.auth.currentUser == null
           ? const SigninPage()
