@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LobbyPage extends StatelessWidget {
   const LobbyPage({super.key});
@@ -22,6 +23,26 @@ class LobbyPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
+            final supabase = Supabase.instance.client;
+            final roomId = 'room1';
+            final channel = supabase.channel(roomId);
+
+            // イベントリスナを登録
+            channel.onPresenceJoin((payload) {
+              // TODO: 参加者一覧に追加
+            }).onPresenceLeave((payload) {
+              // TODO: 参加者一覧から削除
+            }).subscribe();
+
+            // presence を登録
+            final userStatus = {
+              'user_id': supabase.auth.currentUser!.id,
+            };
+            channel.subscribe((status, error) async {
+              if (status != RealtimeSubscribeStatus.subscribed) return;
+              await channel.track(userStatus);
+            });
+
             Navigator.pushNamed(context, '/waiting');
           },
           child: const Column(
