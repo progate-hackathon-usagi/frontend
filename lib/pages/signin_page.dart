@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -17,12 +19,16 @@ class SigninPage extends StatelessWidget {
           const Text("Sign in"),
           ElevatedButton(
               onPressed: () async {
+                final GoogleSignIn googleSignIn;
                 const webClientId =
                     String.fromEnvironment('GOOGLE_OAUTH_WEB_CLIENT_ID');
-
-                final GoogleSignIn googleSignIn = GoogleSignIn(
+                const iosClientId =
+                    String.fromEnvironment('GOOGLE_OAUTH_IOS_CLIENT_ID');
+                googleSignIn = GoogleSignIn(
+                  clientId: iosClientId,
                   serverClientId: webClientId,
                 );
+
                 final googleUser = await googleSignIn.signIn();
                 if (googleUser == null) {
                   return;
