@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/waiting_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LobbyPage extends StatelessWidget {
@@ -40,7 +41,10 @@ class LobbyPage extends StatelessWidget {
             };
 
             // イベントリスナを登録
-            channel.onPresenceJoin((payload) {
+            channel.onPresenceSync((_) {
+              final newState = channel.presenceState();
+              print("同期：$newState");
+            }).onPresenceJoin((payload) {
               // TODO: 参加者一覧に追加
               print("入室：$payload");
             }).onPresenceLeave((payload) {
@@ -51,7 +55,11 @@ class LobbyPage extends StatelessWidget {
               final presenceTrackStatus = await channel.track(userStatus);
             });
 
-            Navigator.pushNamed(context, '/waiting');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) =>
+                      WaitingPage(context: context, channel: channel)),
+            );
           },
           child: const Column(
             mainAxisSize: MainAxisSize.min,

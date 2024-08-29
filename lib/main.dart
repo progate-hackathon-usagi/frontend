@@ -30,8 +30,6 @@ class MainApp extends StatelessWidget {
         "/signin": (BuildContext context) => const SigninPage(),
         "/lobby": (BuildContext context) => const LobbyPage(),
         "/profile": (BuildContext context) => const ProfilePage(),
-        "/waiting": (BuildContext context) => WaitingPage(context),
-        "/room": (BuildContext context) => const RoomPage(),
         "/finished": (BuildContext context) => const FinishedPage(),
       },
     );
