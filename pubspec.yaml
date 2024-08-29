@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   google_sign_in: ^6.2.1
   supabase_flutter: ^2.6.0
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -19,6 +20,18 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+flutter_native_splash:
+  color: '#add8e6'
+  image: 'assets/images/splash.png'
+  color_dark: '#262626'
+  image_dark: 'assets/images/splash.png'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#add8e6'
+    image: 'assets/images/splash_android12.png'
+    icon_background_color_dark: '#262626'
+    image_dark: 'assets/images/splash_android12.png'
 
 assets:
   - .env
