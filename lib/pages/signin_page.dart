@@ -55,6 +55,10 @@ class SigninPage extends StatelessWidget {
                   throw 'Failed to sign in with Google';
                 }
 
+                if (!context.mounted) {
+                  print("context is not mounted");
+                  return;
+                }
                 Navigator.pushNamed(context, "/lobby");
               },
               child: const Text("Sign in with Google"))

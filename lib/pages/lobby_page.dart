@@ -35,21 +35,20 @@ class LobbyPage extends StatelessWidget {
             final supabase = Supabase.instance.client;
             final roomId = 'room1';
             final channel = supabase.channel(roomId);
+            final userStatus = {
+              'user_id': supabase.auth.currentUser!.id,
+            };
 
             // イベントリスナを登録
             channel.onPresenceJoin((payload) {
               // TODO: 参加者一覧に追加
+              print("入室：$payload");
             }).onPresenceLeave((payload) {
               // TODO: 参加者一覧から削除
-            }).subscribe();
-
-            // presence を登録
-            final userStatus = {
-              'user_id': supabase.auth.currentUser!.id,
-            };
-            channel.subscribe((status, error) async {
+              print("退室：$payload");
+            }).subscribe((status, error) async {
               if (status != RealtimeSubscribeStatus.subscribed) return;
-              await channel.track(userStatus);
+              final presenceTrackStatus = await channel.track(userStatus);
             });
 
             Navigator.pushNamed(context, '/waiting');
