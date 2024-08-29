@@ -6,6 +6,7 @@ class LobbyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final supabase = Supabase.instance.client;
     const headingTextStyle = TextStyle(fontSize: 36, color: Colors.black);
 
     return Scaffold(
@@ -16,6 +17,14 @@ class LobbyPage extends StatelessWidget {
             icon: Icon(Icons.person),
             onPressed: () {
               Navigator.pushNamed(context, '/profile');
+            },
+          ),
+          IconButton(
+            iconSize: 50,
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              supabase.auth.signOut();
+              Navigator.pushNamed(context, '/signin');
             },
           ),
         ],
