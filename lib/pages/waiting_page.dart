@@ -20,11 +20,9 @@ class _WaitingPageState extends State<WaitingPage> {
     final supabase = Supabase.instance.client;
 
     // イベントリスナを登録
-    widget.channel.onPresenceSync((_) {
-      final state = widget.channel.presenceState();
-      print("同期：$state");
-      print("users: $_users");
-    }).onPresenceJoin((payload) {
+    widget.channel
+        // 参加イベント時の処理
+        .onPresenceJoin((payload) {
       final newUserPayload = payload.newPresences.first.payload;
       final newUserId = newUserPayload['user_id'];
       if (_users.any((user) => user['user_id'] == newUserId)) return;
@@ -34,11 +32,13 @@ class _WaitingPageState extends State<WaitingPage> {
         'iconUrl': newUserPayload['iconUrl'],
       };
       _addUser(newUserStatus);
-      print("add user: ${newUserStatus['name']}");
+
+      // 退室イベント時の処理
     }).onPresenceLeave((payload) {
       final leftUserId = payload.leftPresences.first.payload['user_id'];
       _removeUser(leftUserId);
-      print("remove user: $leftUserId");
+
+      // 参加イベントを発生させる（自分の参加を通知）
     }).subscribe((status, error) async {
       if (status != RealtimeSubscribeStatus.subscribed) return;
 
