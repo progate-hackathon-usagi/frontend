@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/screens/tab_bar.dart';
 import 'package:frontend/pages/finished_page.dart';
-import 'package:frontend/pages/room_page.dart';
 import 'package:frontend/pages/signin_page.dart';
-import 'package:frontend/pages/waiting_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {

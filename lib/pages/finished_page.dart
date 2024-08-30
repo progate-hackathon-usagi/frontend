@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/screens/tab_bar.dart';
 
 class FinishedPage extends StatelessWidget {
   const FinishedPage({super.key});
@@ -9,8 +10,11 @@ class FinishedPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/lobby", (_) => false);
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const TabBarWidget()),
+                (route) => false,
+              );
             },
             // for debug
             child: const Text("ホームへ戻る")),
