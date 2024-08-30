@@ -11,7 +11,7 @@ class WaitingPage extends StatefulWidget {
 }
 
 class _WaitingPageState extends State<WaitingPage> {
-  List _users = [];
+  final List _users = [];
 
   @override
   void initState() {
@@ -104,7 +104,7 @@ class _WaitingPageState extends State<WaitingPage> {
                 );
               },
               child: const Text("ラジオ体操へ")),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ]),
       ),
     );

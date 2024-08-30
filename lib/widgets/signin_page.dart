@@ -56,6 +56,9 @@ class SigninPage extends StatelessWidget {
                   throw 'Failed to sign in with Google';
                 }
 
+                if(!context.mounted) {
+                  return;
+                }
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LobbyPage(),
