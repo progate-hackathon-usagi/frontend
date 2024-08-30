@@ -301,7 +301,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.2.5"
-<<<<<<< HEAD
   xml:
     dependency: transitive
     description:
@@ -318,8 +317,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-=======
->>>>>>> 012267a (feat: intlパッケージを追加)
 sdks:
-  dart: ">=3.4.0 <4.0.0"
+  dart: ">=3.3.0 <4.0.0"
   flutter: ">=3.18.0-18.0.pre.54"

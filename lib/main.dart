@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/finished_page.dart';
+import 'package:frontend/pages/lobby_page.dart';
+import 'package:frontend/pages/profile_page.dart';
+import 'package:frontend/pages/room_page.dart';
+import 'package:frontend/pages/waiting_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +14,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      home: const LobbyPage(),
+      routes: <String, WidgetBuilder>{
+        "/lobby": (BuildContext context) => const LobbyPage(),
+        "/profile": (BuildContext context) => const ProfilePage(),
+        "/waiting": (BuildContext context) => WaitingPage(context),
+        "/room": (BuildContext context) => const RoomPage(),
+        "/finished": (BuildContext context) => const FinishedPage(),
+      },
     );
   }
 }
