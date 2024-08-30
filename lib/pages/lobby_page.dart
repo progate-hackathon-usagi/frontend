@@ -36,24 +36,6 @@ class LobbyPage extends StatelessWidget {
             final supabase = Supabase.instance.client;
             final roomId = 'room1';
             final channel = supabase.channel(roomId);
-            final userStatus = {
-              'user_id': supabase.auth.currentUser!.id,
-            };
-
-            // イベントリスナを登録
-            channel.onPresenceSync((_) {
-              final newState = channel.presenceState();
-              print("同期：$newState");
-            }).onPresenceJoin((payload) {
-              // TODO: 参加者一覧に追加
-              print("入室：$payload");
-            }).onPresenceLeave((payload) {
-              // TODO: 参加者一覧から削除
-              print("退室：$payload");
-            }).subscribe((status, error) async {
-              if (status != RealtimeSubscribeStatus.subscribed) return;
-              final presenceTrackStatus = await channel.track(userStatus);
-            });
 
             Navigator.of(context).push(
               MaterialPageRoute(
