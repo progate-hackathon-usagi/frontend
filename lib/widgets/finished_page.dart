@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/screens/tab_bar.dart';
+import 'package:frontend/widgets/lobby_page.dart';
 
 class FinishedPage extends StatelessWidget {
   const FinishedPage({super.key});
@@ -12,7 +12,7 @@ class FinishedPage extends StatelessWidget {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const TabBarWidget()),
+                MaterialPageRoute(builder: (context) => const LobbyPage()),
                 (route) => false,
               );
             },

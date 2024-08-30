@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/screens/home_screen.dart';
-import 'package:frontend/pages/screens/profile_screen.dart';
+import 'package:frontend/widgets/screens/home_screen.dart';
+import 'package:frontend/widgets/screens/profile_screen.dart';
 
 class TabBarWidget extends StatefulWidget {
   const TabBarWidget({Key? key}) : super(key: key);

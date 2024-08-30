@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/room_page.dart';
+import 'package:frontend/widgets/room_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WaitingPage extends StatefulWidget {
