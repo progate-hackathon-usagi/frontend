@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/screens/tab_bar.dart';
 import 'package:frontend/pages/finished_page.dart';
-import 'package:frontend/pages/lobby_page.dart';
-import 'package:frontend/pages/profile_page.dart';
 import 'package:frontend/pages/room_page.dart';
 import 'package:frontend/pages/signin_page.dart';
 import 'package:frontend/pages/waiting_page.dart';
@@ -25,11 +24,9 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       home: supabase.auth.currentUser == null
           ? const SigninPage()
-          : const LobbyPage(),
+          : const TabBarWidget(),
       routes: <String, WidgetBuilder>{
         "/signin": (BuildContext context) => const SigninPage(),
-        "/lobby": (BuildContext context) => const LobbyPage(),
-        "/profile": (BuildContext context) => const ProfilePage(),
         "/waiting": (BuildContext context) => WaitingPage(context),
         "/room": (BuildContext context) => const RoomPage(),
         "/finished": (BuildContext context) => const FinishedPage(),

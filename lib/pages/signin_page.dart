@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/screens/tab_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -55,7 +56,11 @@ class SigninPage extends StatelessWidget {
                   throw 'Failed to sign in with Google';
                 }
 
-                Navigator.pushNamed(context, "/lobby");
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const TabBarWidget(),
+                  ),
+                );
               },
               child: const Text("Sign in with Google"))
         ],
