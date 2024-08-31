@@ -40,13 +40,15 @@ class _WaitingPageState extends State<WaitingPage> {
 
         // イベントの開始を通知
         .onBroadcast(
-            event: "start",
-            callback: (payload) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => RoomPage(channel: widget.channel)),
-              );
-            })
+          event: "start",
+          callback: (payload) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => RoomPage(channel: widget.channel),
+              ),
+            );
+          },
+        )
 
         // 参加イベントを発生させる（自分の参加を通知）
         .subscribe((status, error) async {

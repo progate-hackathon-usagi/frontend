@@ -20,7 +20,7 @@ ExerciseLogsResponse _$ExerciseLogsResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ExerciseLogsResponse {
-  List<ExerciseLog> get exerciseLogsForMonth =>
+  List<ExerciseLog> get exercise_logs_for_month =>
       throw _privateConstructorUsedError;
 
   /// Serializes this ExerciseLogsResponse to a JSON map.
@@ -39,7 +39,7 @@ abstract class $ExerciseLogsResponseCopyWith<$Res> {
           $Res Function(ExerciseLogsResponse) then) =
       _$ExerciseLogsResponseCopyWithImpl<$Res, ExerciseLogsResponse>;
   @useResult
-  $Res call({List<ExerciseLog> exerciseLogsForMonth});
+  $Res call({List<ExerciseLog> exercise_logs_for_month});
 }
 
 /// @nodoc
@@ -58,12 +58,12 @@ class _$ExerciseLogsResponseCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? exerciseLogsForMonth = null,
+    Object? exercise_logs_for_month = null,
   }) {
     return _then(_value.copyWith(
-      exerciseLogsForMonth: null == exerciseLogsForMonth
-          ? _value.exerciseLogsForMonth
-          : exerciseLogsForMonth // ignore: cast_nullable_to_non_nullable
+      exercise_logs_for_month: null == exercise_logs_for_month
+          ? _value.exercise_logs_for_month
+          : exercise_logs_for_month // ignore: cast_nullable_to_non_nullable
               as List<ExerciseLog>,
     ) as $Val);
   }
@@ -77,7 +77,7 @@ abstract class _$$ExerciseLogsResponseImplCopyWith<$Res>
       __$$ExerciseLogsResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ExerciseLog> exerciseLogsForMonth});
+  $Res call({List<ExerciseLog> exercise_logs_for_month});
 }
 
 /// @nodoc
@@ -93,12 +93,12 @@ class __$$ExerciseLogsResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? exerciseLogsForMonth = null,
+    Object? exercise_logs_for_month = null,
   }) {
     return _then(_$ExerciseLogsResponseImpl(
-      exerciseLogsForMonth: null == exerciseLogsForMonth
-          ? _value._exerciseLogsForMonth
-          : exerciseLogsForMonth // ignore: cast_nullable_to_non_nullable
+      exercise_logs_for_month: null == exercise_logs_for_month
+          ? _value._exercise_logs_for_month
+          : exercise_logs_for_month // ignore: cast_nullable_to_non_nullable
               as List<ExerciseLog>,
     ));
   }
@@ -108,24 +108,24 @@ class __$$ExerciseLogsResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ExerciseLogsResponseImpl implements _ExerciseLogsResponse {
   const _$ExerciseLogsResponseImpl(
-      {required final List<ExerciseLog> exerciseLogsForMonth})
-      : _exerciseLogsForMonth = exerciseLogsForMonth;
+      {required final List<ExerciseLog> exercise_logs_for_month})
+      : _exercise_logs_for_month = exercise_logs_for_month;
 
   factory _$ExerciseLogsResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExerciseLogsResponseImplFromJson(json);
 
-  final List<ExerciseLog> _exerciseLogsForMonth;
+  final List<ExerciseLog> _exercise_logs_for_month;
   @override
-  List<ExerciseLog> get exerciseLogsForMonth {
-    if (_exerciseLogsForMonth is EqualUnmodifiableListView)
-      return _exerciseLogsForMonth;
+  List<ExerciseLog> get exercise_logs_for_month {
+    if (_exercise_logs_for_month is EqualUnmodifiableListView)
+      return _exercise_logs_for_month;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_exerciseLogsForMonth);
+    return EqualUnmodifiableListView(_exercise_logs_for_month);
   }
 
   @override
   String toString() {
-    return 'ExerciseLogsResponse(exerciseLogsForMonth: $exerciseLogsForMonth)';
+    return 'ExerciseLogsResponse(exercise_logs_for_month: $exercise_logs_for_month)';
   }
 
   @override
@@ -133,14 +133,14 @@ class _$ExerciseLogsResponseImpl implements _ExerciseLogsResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ExerciseLogsResponseImpl &&
-            const DeepCollectionEquality()
-                .equals(other._exerciseLogsForMonth, _exerciseLogsForMonth));
+            const DeepCollectionEquality().equals(
+                other._exercise_logs_for_month, _exercise_logs_for_month));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_exerciseLogsForMonth));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_exercise_logs_for_month));
 
   /// Create a copy of ExerciseLogsResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -162,14 +162,14 @@ class _$ExerciseLogsResponseImpl implements _ExerciseLogsResponse {
 
 abstract class _ExerciseLogsResponse implements ExerciseLogsResponse {
   const factory _ExerciseLogsResponse(
-          {required final List<ExerciseLog> exerciseLogsForMonth}) =
+          {required final List<ExerciseLog> exercise_logs_for_month}) =
       _$ExerciseLogsResponseImpl;
 
   factory _ExerciseLogsResponse.fromJson(Map<String, dynamic> json) =
       _$ExerciseLogsResponseImpl.fromJson;
 
   @override
-  List<ExerciseLog> get exerciseLogsForMonth;
+  List<ExerciseLog> get exercise_logs_for_month;
 
   /// Create a copy of ExerciseLogsResponse
   /// with the given fields replaced by the non-null parameter values.

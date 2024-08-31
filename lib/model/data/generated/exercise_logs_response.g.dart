@@ -9,15 +9,16 @@ part of '../exercise_logs_response.dart';
 _$ExerciseLogsResponseImpl _$$ExerciseLogsResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$ExerciseLogsResponseImpl(
-      exerciseLogsForMonth: (json['exerciseLogsForMonth'] as List<dynamic>)
-          .map((e) => ExerciseLog.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      exercise_logs_for_month:
+          (json['exercise_logs_for_month'] as List<dynamic>)
+              .map((e) => ExerciseLog.fromJson(e as Map<String, dynamic>))
+              .toList(),
     );
 
 Map<String, dynamic> _$$ExerciseLogsResponseImplToJson(
         _$ExerciseLogsResponseImpl instance) =>
     <String, dynamic>{
-      'exerciseLogsForMonth': instance.exerciseLogsForMonth,
+      'exercise_logs_for_month': instance.exercise_logs_for_month,
     };
 
 _$ExerciseLogImpl _$$ExerciseLogImplFromJson(Map<String, dynamic> json) =>

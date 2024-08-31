@@ -7,7 +7,7 @@ part 'generated/exercise_logs_response.g.dart';
 @freezed
 class ExerciseLogsResponse with _$ExerciseLogsResponse {
   const factory ExerciseLogsResponse({
-    required List<ExerciseLog> exerciseLogsForMonth,
+    required List<ExerciseLog> exercise_logs_for_month,
   }) = _ExerciseLogsResponse;
 
   factory ExerciseLogsResponse.fromJson(Map<String, dynamic> json) =>
@@ -24,6 +24,10 @@ class ExerciseLogsResponse with _$ExerciseLogsResponse {
       'exercise/$id/$year/$month',
       method: HttpMethod.get,
     );
+
+    if (response.data == null || response.data is! Map<String, dynamic>) {
+      return const ExerciseLogsResponse(exercise_logs_for_month: []);
+    }
 
     return ExerciseLogsResponse.fromJson(response.data as Map<String, dynamic>);
   }
