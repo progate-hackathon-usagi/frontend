@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/model/data/participant.dart';
 import 'package:frontend/widgets/room_page.dart';
-import 'package:frontend/widgets/waiting/waiting_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WaitingPage extends ConsumerStatefulWidget {
@@ -59,8 +58,7 @@ class _WaitingPageState extends ConsumerState<WaitingPage> {
               name: "user",
               iconUrl: "https://via.placeholder.com/350x350?text=sample");
 
-          final presenceTrackStatus =
-              await widget.channel.track(currentUser.toJson());
+          await widget.channel.track(currentUser.toJson());
           ref.read(participantsProvider.notifier).addParticipant(currentUser);
         });
   }
