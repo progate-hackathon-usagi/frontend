@@ -45,10 +45,16 @@ class _RoomPageState extends State<RoomPage> {
   @override
   Widget build(BuildContext context) {
     _play();
+    _audioPlayer.onPlayerComplete.listen((event) {
+      if (!context.mounted) return;
+      Navigator.pushNamed(context, "/finished");
+    });
+
     return Scaffold(
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
+            _stop();
             await widget.channel.untrack();
 
             if (!context.mounted) return;
