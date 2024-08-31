@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -57,6 +58,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ],
       ),
     );
+  }
+
+  void _onSubmit() {
+    if (!_formKey.currentState!.validate()) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Processing Data')),
+    );
+
+    final supabase = Supabase.instance.client;
+
+    if (_imageFile != null) {
+      _uploadImage();
+    }
+
+    Navigator.pop(context);
+  }
+
+  void _uploadImage() async {
+    try {
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser!.id;
+
+      final storage = supabase.storage.from('icons');
+      final response = await storage.upload('$userId.png', _imageFile!);
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> _getImageOnCamera() async {
@@ -126,13 +155,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 },
               ),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  }
-                },
+                onPressed: _onSubmit,
                 child: const Text('更新'),
               ),
             ],
