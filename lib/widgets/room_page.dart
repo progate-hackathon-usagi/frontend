@@ -1,6 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:video_player/video_player.dart';
 
 class RoomPage extends StatefulWidget {
   final RealtimeChannel channel;
@@ -12,34 +12,23 @@ class RoomPage extends StatefulWidget {
 }
 
 class _RoomPageState extends State<RoomPage> {
-  late AudioCache _audioCache;
-  late AudioPlayer _audioPlayer;
+  late VideoPlayerController _videoController;
 
   @override
   void initState() {
     super.initState();
-    _audioCache = AudioCache(prefix: "assets/audio/");
-    _audioPlayer = AudioPlayer();
+    _videoController = VideoPlayerController.asset("assets/video/exercise.mp4")
+      ..initialize().then((_) {
+        if (!mounted) return;
+        setState(() {});
+        _videoController.play();
+      });
   }
 
   @override
   void dispose() {
-    _stop();
-    _audioPlayer.dispose();
+    _videoController.dispose();
     super.dispose();
-  }
-
-  void _play() async {
-    try {
-      final url = "audio/exercise.mp3";
-      await _audioPlayer.play(AssetSource(url));
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
-
-  void _stop() async {
-    await _audioPlayer.stop();
   }
 
   void _logExercise() async {
@@ -52,22 +41,24 @@ class _RoomPageState extends State<RoomPage> {
 
   @override
   Widget build(BuildContext context) {
-    _play();
-    _audioPlayer.onPlayerComplete.listen((event) {
-      _logExercise();
-      if (!context.mounted) return;
-      Navigator.pushNamed(context, "/finished");
-    });
-
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        body: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          const Text("ここにいい感じのガイドを表示する"),
+          Column(
+            children: [
+              AspectRatio(
+                  aspectRatio: _videoController.value.aspectRatio,
+                  child: VideoPlayer(_videoController)),
+              VideoProgressIndicator(_videoController, allowScrubbing: false)
+            ],
+          ),
           Center(
             child: ElevatedButton(
               onPressed: () async {
-                _stop();
+                _videoController.pause();
                 _logExercise();
                 await widget.channel.untrack();
 
@@ -80,6 +71,6 @@ class _RoomPageState extends State<RoomPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
