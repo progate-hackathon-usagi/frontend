@@ -32,5 +32,9 @@ class UserProfile with _$UserProfile {
 }
 
 extension UserProfileX on UserProfile {
-  String getIconURL() => 'https://via.placeholder.com/350x350?text=sample';
+  String getIconURL() {
+    final supabase = Supabase.instance.client;
+    final userId = supabase.auth.currentUser!.id;
+    return supabase.storage.from('icons').getPublicUrl('$userId.png');
+  }
 }

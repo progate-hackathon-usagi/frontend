@@ -3,20 +3,37 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/widgets/screens/profile/profile_viewmodel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class EditProfilePage extends StatefulWidget {
+class EditProfilePage extends ConsumerStatefulWidget {
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final picker = ImagePicker();
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   File? _imageFile;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserProfile();
+  }
+
+  Future<void> _fetchUserProfile() async {
+    final supabase = Supabase.instance.client;
+    final userId = supabase.auth.currentUser!.id;
+    final userProfile = ref.read(profileViewModelProvider(userId));
+    userProfile.whenData((profile) {
+      _nameController.text = profile.name;
+    });
+  }
 
   void _onTapImage() {
     showCupertinoModalPopup(
@@ -73,7 +90,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _uploadImage();
     }
 
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   void _uploadImage() async {
@@ -82,7 +99,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       final userId = supabase.auth.currentUser!.id;
 
       final storage = supabase.storage.from('icons');
-      final response = await storage.upload('$userId.png', _imageFile!);
+      final response = await storage.upload('$userId.png', _imageFile!,
+          fileOptions: const FileOptions(upsert: true));
     } catch (e) {
       print(e);
     }

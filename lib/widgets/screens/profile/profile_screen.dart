@@ -19,12 +19,15 @@ class ProfileScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () {
-              Navigator.of(context).push(
+            onPressed: () async {
+              final result = await Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => EditProfilePage(),
                 ),
               );
+              if (result == true) {
+                ref.refresh(profileViewModelProvider(userId));
+              }
             },
           ),
         ],
@@ -43,13 +46,13 @@ class ProfileScreen extends ConsumerWidget {
                     radius: 100,
                     backgroundImage: NetworkImage(iconURL),
                   ),
-                  const SizedBox(height: 20), // 名前とアイコンの間にスペースを追加
+                  const SizedBox(height: 20),
                   Text(
                     profile.name,
                     style: const TextStyle(
                         fontSize: 36, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20), // 名前と情報の間にスペースを追加
+                  const SizedBox(height: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

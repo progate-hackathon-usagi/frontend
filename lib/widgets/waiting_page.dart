@@ -111,12 +111,6 @@ class _WaitingPageState extends State<WaitingPage> {
                   event: "start",
                   payload: {"message": "start"},
                 );
-
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => RoomPage(channel: widget.channel),
-                  ),
-                );
               },
               child: const Column(
                 mainAxisSize: MainAxisSize.min,
