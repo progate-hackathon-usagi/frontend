@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RoomPage extends StatelessWidget {
-  const RoomPage({super.key});
+  final RealtimeChannel channel;
+
+  const RoomPage({super.key, required this.channel});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              await channel.untrack();
+
+              if(!context.mounted) return;
               Navigator.pushNamed(context, "/finished");
             },
             // for debug

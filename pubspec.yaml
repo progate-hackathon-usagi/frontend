@@ -1,18 +1,18 @@
 name: frontend
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   google_sign_in: ^6.2.1
-  supabase_flutter: ^2.6.0
   flutter_native_splash: ^2.4.1
   intl: ^0.18.1
+  supabase_flutter: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -23,10 +23,10 @@ flutter:
   uses-material-design: true
 
 flutter_native_splash:
-  color: '#add8e6'
-  image: 'assets/images/splash.png'
-  color_dark: '#262626'
-  image_dark: 'assets/images/splash.png'
+  color: "#add8e6"
+  image: "assets/images/splash.png"
+  color_dark: "#262626"
+  image_dark: "assets/images/splash.png"
   fullscreen: true
   android_12:
     icon_background_color: '#add8e6'

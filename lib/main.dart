@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/screens/tab_bar.dart';
-import 'package:frontend/pages/finished_page.dart';
-import 'package:frontend/pages/room_page.dart';
-import 'package:frontend/pages/signin_page.dart';
-import 'package:frontend/pages/waiting_page.dart';
+import 'package:frontend/widgets/lobby_page.dart';
+import 'package:frontend/widgets/finished_page.dart';
+import 'package:frontend/widgets/signin_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -24,11 +22,9 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       home: supabase.auth.currentUser == null
           ? const SigninPage()
-          : const TabBarWidget(),
+          : const LobbyPage(),
       routes: <String, WidgetBuilder>{
         "/signin": (BuildContext context) => const SigninPage(),
-        "/waiting": (BuildContext context) => WaitingPage(context),
-        "/room": (BuildContext context) => const RoomPage(),
         "/finished": (BuildContext context) => const FinishedPage(),
       },
     );

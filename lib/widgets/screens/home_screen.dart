@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/waiting_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,7 +25,17 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            final supabase = Supabase.instance.client;
+            final roomId = 'room1';
+            final channel = supabase.channel(roomId);
+
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) =>
+                      WaitingPage(context: context, channel: channel)),
+            );
+          },
           child: const Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
