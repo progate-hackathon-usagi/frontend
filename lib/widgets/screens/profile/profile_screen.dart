@@ -77,12 +77,12 @@ class _ProfileDetails extends StatelessWidget {
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 4.0),
-        StreakText(streak: profile.current_exercise_day_streak),
+        _StreakText(streak: profile.current_exercise_day_streak),
         const SizedBox(height: 4.0),
         _ProfileDivider(),
         const SizedBox(height: 8.0),
         Text(
-          '累計 700日 体操をしています',
+          '累計 ${profile.total_exercise_day_count.toString()}日 体操をしています',
           style: TextStyle(fontSize: 12.0, color: Colors.grey[600]),
         ),
       ],
@@ -90,8 +90,8 @@ class _ProfileDetails extends StatelessWidget {
   }
 }
 
-class StreakText extends StatelessWidget {
-  const StreakText({super.key, required this.streak});
+class _StreakText extends StatelessWidget {
+  const _StreakText({required this.streak});
 
   final int streak;
 
