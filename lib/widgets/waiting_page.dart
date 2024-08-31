@@ -42,7 +42,6 @@ class _WaitingPageState extends State<WaitingPage> {
         .onBroadcast(
             event: "start",
             callback: (payload) {
-              print("おい！始まるぞ");
               Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => RoomPage(channel: widget.channel)),

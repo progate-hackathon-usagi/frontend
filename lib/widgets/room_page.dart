@@ -51,18 +51,24 @@ class _RoomPageState extends State<RoomPage> {
     });
 
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            _stop();
-            await widget.channel.untrack();
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text("ここにいい感じのガイドを表示する"),
+          Center(
+            child: ElevatedButton(
+              onPressed: () async {
+                _stop();
+                await widget.channel.untrack();
 
-            if (!context.mounted) return;
-            Navigator.pushNamed(context, "/finished");
-          },
-          // for debug
-          child: const Text("ラジオ体操を終了する"),
-        ),
+                if (!context.mounted) return;
+                Navigator.pushNamed(context, "/finished");
+              },
+              // for debug
+              child: const Text("ラジオ体操を終了する"),
+            ),
+          ),
+        ],
       ),
     );
   }
