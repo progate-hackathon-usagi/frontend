@@ -23,36 +23,45 @@ class _WaitingPageState extends State<WaitingPage> {
     widget.channel
         // 参加イベント時の処理
         .onPresenceJoin((payload) {
-      final newUserPayload = payload.newPresences.first.payload;
-      final newUserId = newUserPayload['user_id'];
-      if (_users.any((user) => user['user_id'] == newUserId)) return;
-      final newUserStatus = {
-        'user_id': newUserId,
-        'name': newUserPayload['name'],
-        'iconUrl': newUserPayload['iconUrl'],
-      };
-      _addUser(newUserStatus);
+          final newUserPayload = payload.newPresences.first.payload;
+          final newUserId = newUserPayload['user_id'];
+          if (_users.any((user) => user['user_id'] == newUserId)) return;
+          final newUserStatus = {
+            'user_id': newUserId,
+            'name': newUserPayload['name'],
+            'iconUrl': newUserPayload['iconUrl'],
+          };
+          _addUser(newUserStatus);
+        })
+        // 退室イベント時の処理
+        .onPresenceLeave((payload) {
+          final leftUserId = payload.leftPresences.first.payload['user_id'];
+          _removeUser(leftUserId);
+        })
+        // 参加イベントを発生させる（自分の参加を通知）
+        .onBroadcast(
+            event: "start",
+            callback: (payload) {
+              print("おい！始まるぞ");
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => RoomPage(channel: widget.channel)),
+              );
+            })
+        .subscribe((status, error) async {
+          if (status != RealtimeSubscribeStatus.subscribed) return;
 
-      // 退室イベント時の処理
-    }).onPresenceLeave((payload) {
-      final leftUserId = payload.leftPresences.first.payload['user_id'];
-      _removeUser(leftUserId);
+          // TODO: name, iconUrl を profile から拾ってくる
+          // 本当は型指定したいけど、track にインスタンス渡すと怒られるので Map で渡してる
+          final userStatus = {
+            'user_id': supabase.auth.currentUser!.id,
+            'name': "user",
+            'iconUrl': "https://via.placeholder.com/350x350?text=sample",
+          };
 
-      // 参加イベントを発生させる（自分の参加を通知）
-    }).subscribe((status, error) async {
-      if (status != RealtimeSubscribeStatus.subscribed) return;
-
-      // TODO: name, iconUrl を profile から拾ってくる
-      // 本当は型指定したいけど、track にインスタンス渡すと怒られるので Map で渡してる
-      final userStatus = {
-        'user_id': supabase.auth.currentUser!.id,
-        'name': "user",
-        'iconUrl': "https://via.placeholder.com/350x350?text=sample",
-      };
-
-      final presenceTrackStatus = await widget.channel.track(userStatus);
-      _addUser(userStatus);
-    });
+          final presenceTrackStatus = await widget.channel.track(userStatus);
+          _addUser(userStatus);
+        });
   }
 
   void _addUser(user) {
@@ -98,12 +107,26 @@ class _WaitingPageState extends State<WaitingPage> {
           ),
           ElevatedButton(
               onPressed: () {
+                // TODO: ラジオ体操の開始を broadcast
+                widget.channel.sendBroadcastMessage(
+                  event: "start",
+                  payload: {"message": "start"},
+                );
+
                 Navigator.of(context).push(
                   MaterialPageRoute(
                       builder: (context) => RoomPage(channel: widget.channel)),
                 );
               },
-              child: const Text("ラジオ体操へ")),
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text('ラジオ体操を始める'),
+                  const Text("(ルームに参加している全員が開始されます)",
+                      style: TextStyle(fontSize: 12)),
+                ],
+              )),
           const SizedBox(height: 20),
         ]),
       ),
