@@ -42,10 +42,19 @@ class _RoomPageState extends State<RoomPage> {
     await _audioPlayer.stop();
   }
 
+  void _logExercise() async {
+    final supabase = Supabase.instance.client;
+    supabase.functions.invoke("exercise", body: {
+      "user_id": supabase.auth.currentUser!.id,
+      "timestamp": DateTime.now().toIso8601String(),
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _play();
     _audioPlayer.onPlayerComplete.listen((event) {
+      _logExercise();
       if (!context.mounted) return;
       Navigator.pushNamed(context, "/finished");
     });
@@ -59,6 +68,7 @@ class _RoomPageState extends State<RoomPage> {
             child: ElevatedButton(
               onPressed: () async {
                 _stop();
+                _logExercise();
                 await widget.channel.untrack();
 
                 if (!context.mounted) return;
