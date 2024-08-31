@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/model/data/user_profile.dart';
-import 'package:frontend/widgets/screens/profile/callender_view.dart';
 import 'package:frontend/widgets/edit_profile_page.dart';
+import 'package:frontend/widgets/screens/profile/calender_view.dart';
 import 'package:frontend/widgets/screens/profile/profile_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -90,7 +90,7 @@ class _ProfileContent extends StatelessWidget {
                   ),
                 ),
               ),
-              const CallenderView(),
+              const CalenderView(),
             ],
           ),
         ),
