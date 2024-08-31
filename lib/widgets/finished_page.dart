@@ -9,15 +9,16 @@ class FinishedPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const LobbyPage()),
-                (route) => false,
-              );
-            },
-            // for debug
-            child: const Text("ホームへ戻る")),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const LobbyPage()),
+              (route) => false,
+            );
+          },
+          // for debug
+          child: const Text("ホームへ戻る"),
+        ),
       ),
     );
   }
