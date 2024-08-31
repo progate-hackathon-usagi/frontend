@@ -110,19 +110,9 @@ packages:
     description:
       name: csslib
       sha256: "706b5707578e0c1b4b7550f64078f0a0f19dec3f50a178ffae7006b0a9ca58fb"
-      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.18.0"
-  crypto:
-    dependency: transitive
-    description:
-      name: crypto
-      sha256: ec30d999af904f33454ba22ed9a86162b35e52b44ac4807d1d93c288041d7d27
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-    version: "3.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -535,7 +525,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-    version: "0.0.99"
   source_span:
     dependency: transitive
     description:
@@ -752,14 +741,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  yet_another_json_isolate:
-    dependency: transitive
-    description:
-      name: yet_another_json_isolate
-      sha256: "47ed3900e6b0e4dfe378811a4402e85b7fc126a7daa94f840fef65ea9c8e46f4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   yet_another_json_isolate:
     dependency: transitive
     description:
