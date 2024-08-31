@@ -54,8 +54,9 @@ class SigninViewModel extends StateNotifier<bool> {
       accessToken: accessToken,
     );
 
-    if (res.user?.identities?.isNotEmpty ?? false) {
-      createUserProfile();
+    if (res.user?.identities?.length == 0) {
+      print("new user");
+      await createUserProfile();
     }
 
     if (supabase.auth.currentUser == null) {
