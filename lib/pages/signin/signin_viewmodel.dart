@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/screens/tab_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,6 +60,10 @@ class SigninViewModel extends StateNotifier<bool> {
   }
 
   void navigateToLobby(BuildContext context) {
-    Navigator.pushNamed(context, "/lobby");
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const TabBarWidget(),
+      ),
+    );
   }
 }
