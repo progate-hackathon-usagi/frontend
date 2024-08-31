@@ -107,29 +107,22 @@ class _WaitingPageState extends State<WaitingPage> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
-              // TODO: ラジオ体操の開始を broadcast
-              widget.channel.sendBroadcastMessage(
-                event: "start",
-                payload: {"message": "start"},
-              );
-
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => RoomPage(channel: widget.channel),
-                ),
-              );
-            },
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('ラジオ体操を始める'),
-                const Text("(ルームに参加している全員が開始されます)",
-                    style: TextStyle(fontSize: 12)),
-              ],
-            ),
-          ),
+              onPressed: () {
+                // TODO: ラジオ体操の開始を broadcast
+                widget.channel.sendBroadcastMessage(
+                  event: "start",
+                  payload: {"message": "start"},
+                );
+              },
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text('ラジオ体操を始める'),
+                  const Text("(ルームに参加している全員が開始されます)",
+                      style: TextStyle(fontSize: 12)),
+                ],
+              )),
           const SizedBox(height: 20),
         ]),
       ),

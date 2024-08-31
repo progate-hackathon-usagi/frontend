@@ -1,3 +1,4 @@
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/lobby_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -47,11 +48,16 @@ class SigninViewModel extends StateNotifier<bool> {
       throw 'No ID Token found.';
     }
 
-    await supabase.auth.signInWithIdToken(
+    final res = await supabase.auth.signInWithIdToken(
       provider: OAuthProvider.google,
       idToken: idToken,
       accessToken: accessToken,
     );
+
+    if (res.user?.identities?.length == 0) {
+      print("new user");
+      await createUserProfile();
+    }
 
     if (supabase.auth.currentUser == null) {
       throw 'Failed to sign in with Google';
@@ -67,5 +73,24 @@ class SigninViewModel extends StateNotifier<bool> {
         builder: (context) => const LobbyPage(),
       ),
     );
+  }
+
+  Future<void> createUserProfile() async {
+    final supabase = Supabase.instance.client;
+    final userId = supabase.auth.currentUser!.id;
+
+    try {
+      final wordPair = WordPair.random();
+      supabase.functions.invoke(
+        'profile/$userId',
+        method: HttpMethod.post,
+        body: {
+          'id': userId,
+          'username': wordPair.asCamelCase,
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 }

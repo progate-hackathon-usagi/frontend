@@ -28,7 +28,12 @@ class HomeScreen extends StatelessWidget {
           onPressed: () {
             final supabase = Supabase.instance.client;
             final roomId = 'room1';
-            final channel = supabase.channel(roomId);
+            final channel = supabase.channel(
+              roomId,
+              opts: const RealtimeChannelConfig(
+                self: true
+              )
+            );
 
             Navigator.of(context).push(
               MaterialPageRoute(
