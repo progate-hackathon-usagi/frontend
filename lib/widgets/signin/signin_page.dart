@@ -25,10 +25,11 @@ class SigninPage extends ConsumerWidget {
         children: [
           const Text("Sign in"),
           ElevatedButton(
-              onPressed: () async {
-                viewmodel.signIn(context);
-              },
-              child: const Text("Sign in with Google"))
+            onPressed: () async {
+              viewmodel.signIn(context);
+            },
+            child: const Text("Sign in with Google"),
+          )
         ],
       )),
     );
