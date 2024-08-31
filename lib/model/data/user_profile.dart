@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'generated/user_profile.freezed.dart';
 part 'generated/user_profile.g.dart';
@@ -16,15 +17,17 @@ class UserProfile with _$UserProfile {
       _$UserProfileFromJson(json);
 
   static Future<UserProfile> fetch(String id) async {
-    await Future.delayed(const Duration(seconds: 2));
+    final supabase = Supabase.instance.client;
 
-    // サンプルデータを返す
-    return UserProfile(
-      id: id,
-      name: 'user',
-      total_exercise_day_count: 0,
-      current_exercise_day_streak: 0,
+    final response = await supabase.functions.invoke(
+      'profile/$id', // パスパラメータとしてuserIdを埋め込む
+      method: HttpMethod.get,
     );
+
+    print(response.data["user_profile"]);
+
+    return UserProfile.fromJson(
+        response.data["user_profile"] as Map<String, dynamic>);
   }
 }
 
