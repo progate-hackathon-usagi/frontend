@@ -15,6 +15,7 @@ dependencies:
   supabase_flutter: ^2.6.0
   flutter_riverpod: ^2.5.1
   freezed_annotation: ^2.4.4
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -26,6 +27,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+  - assets/audio/exercise.mp3
 
 flutter_native_splash:
   color: "#add8e6"
@@ -34,10 +37,7 @@ flutter_native_splash:
   image_dark: "assets/images/splash.png"
   fullscreen: true
   android_12:
-    icon_background_color: '#add8e6'
-    image: 'assets/images/splash_android12.png'
-    icon_background_color_dark: '#262626'
-    image_dark: 'assets/images/splash_android12.png'
-
-assets:
-  - .env
+    icon_background_color: "#add8e6"
+    image: "assets/images/splash_android12.png"
+    icon_background_color_dark: "#262626"
+    image_dark: "assets/images/splash_android12.png"
