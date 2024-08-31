@@ -72,31 +72,6 @@ class _CalenderBody extends StatelessWidget {
     );
   }
 
-  Widget _buildCalendarHeader() {
-    List<String> weekdays = ['日', '月', '火', '水', '木', '金', '土'];
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: weekdays
-          .map(
-            (day) => Expanded(
-              child: Center(
-                child: Row(
-                  children: [
-                    Text(
-                      day,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-
   Widget _buildCalendarBody() {
     List<int> daysInMonth = List.generate(31, (index) => index + 1);
     List<int> completedDays = [2, 3, 4, 5, 6];
