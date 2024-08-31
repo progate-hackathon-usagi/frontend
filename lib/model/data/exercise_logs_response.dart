@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'generated/exercise_logs_response.freezed.dart';
 part 'generated/exercise_logs_response.g.dart';
@@ -11,6 +12,21 @@ class ExerciseLogsResponse with _$ExerciseLogsResponse {
 
   factory ExerciseLogsResponse.fromJson(Map<String, dynamic> json) =>
       _$ExerciseLogsResponseFromJson(json);
+
+  static Future<ExerciseLogsResponse> fetch(
+      String id, DateTime? dateTime) async {
+    final supabase = Supabase.instance.client;
+    final now = DateTime.now();
+    final year = dateTime?.year ?? now.year;
+    final month = dateTime?.month ?? now.month;
+
+    final response = await supabase.functions.invoke(
+      'exercise/$id/$year/$month',
+      method: HttpMethod.get,
+    );
+
+    return ExerciseLogsResponse.fromJson(response.data as Map<String, dynamic>);
+  }
 }
 
 @freezed
