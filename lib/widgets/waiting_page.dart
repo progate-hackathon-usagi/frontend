@@ -40,19 +40,21 @@ class _WaitingPageState extends State<WaitingPage> {
 
         // イベントの開始を通知
         .onBroadcast(
-            event: "start",
-            callback: (payload) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => RoomPage(channel: widget.channel)),
-              );
-            })
+          event: "start",
+          callback: (payload) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => RoomPage(channel: widget.channel),
+              ),
+            );
+          },
+        )
 
         // 参加イベントを発生させる（自分の参加を通知）
         .subscribe((status, error) async {
           if (status != RealtimeSubscribeStatus.subscribed) return;
 
-          final currentUser = new Participant(
+          final currentUser = Participant(
               user_id: supabase.auth.currentUser!.id,
               name: "user",
               iconUrl: "https://via.placeholder.com/350x350?text=sample");

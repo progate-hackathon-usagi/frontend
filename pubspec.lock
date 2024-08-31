@@ -34,10 +34,10 @@ packages:
     dependency: transitive
     description:
       name: app_links
-      sha256: "50437e5916e6f56c1ca53e967cbfd6d53b3451465b41eef05ba1533bf1e1c5ea"
+      sha256: "7e058edbc78bd40b6a8227941b955f38320a4e799bc0983c8146bda41593a491"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.3.1"
   app_links_linux:
     dependency: transitive
     description:
@@ -1218,6 +1218,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.2.5"
+  watcher:
+    dependency: transitive
+    description:
+      name: watcher
+      sha256: "3d2ad6751b3c16cf07c7fca317a1413b3f26530319181b37e3b9039b84fc01d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   watcher:
     dependency: transitive
     description:

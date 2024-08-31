@@ -87,7 +87,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     final userId = supabase.auth.currentUser!.id;
     final userProfile = ref.read(profileViewModelProvider(userId));
     userProfile.whenData((profile) {
-      _nameController.text = profile.name;
+      _nameController.text = profile.userProfile?.name ?? '';
     });
   }
 
