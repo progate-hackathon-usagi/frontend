@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -6,18 +11,85 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  final picker = ImagePicker();
+
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _totalExerciseDayCountController = TextEditingController();
-  final _currentExerciseDayStreakController = TextEditingController();
-  final _iconURLController = TextEditingController();
+  File? _imageFile;
+
+  void _onTapImage() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+              _getImageOnCamera();
+            },
+            child: const Text(
+              'カメラ',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context);
+              _getImageOnAlbum();
+            },
+            child: const Text(
+              'アルバム',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () => Navigator.pop(context),
+            child: const Text('閉じる'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _getImageOnCamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) {
+        return;
+      }
+
+      setState(() {
+        _imageFile = File(image.path);
+      });
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _getImageOnAlbum() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        return;
+      }
+      _imageFile = File(image.path);
+      print('画像の添付が成功しました');
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
 
   @override
   void dispose() {
     _nameController.dispose();
-    _totalExerciseDayCountController.dispose();
-    _currentExerciseDayStreakController.dispose();
-    _iconURLController.dispose();
     super.dispose();
   }
 
@@ -33,9 +105,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: <Widget>[
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/select_image.png'),
+              GestureDetector(
+                onTap: _onTapImage,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: _imageFile != null
+                      ? FileImage(_imageFile!)
+                      : AssetImage('assets/images/select_image.png')
+                          as ImageProvider,
+                ),
               ),
               TextFormField(
                 controller: _nameController,
@@ -55,7 +133,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     );
                   }
                 },
-                child: const Text('Submit'),
+                child: const Text('更新'),
               ),
             ],
           ),
