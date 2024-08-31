@@ -53,12 +53,16 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
+		<true />
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true/>
+		<true />
 		<key>UIStatusBarHidden</key>
-		<true/>
+		<true />
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false/>
+		<false />
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>アイコンを変更するには、写真へのアクセス権限が必要です</string>
+		<key>NSCameraUsageDescription</key>
+		<string>アイコンを変更するには、写真へのアクセス権限が必要です</string>
 	</dict>
 </plist>
