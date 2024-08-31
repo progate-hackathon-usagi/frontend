@@ -16,11 +16,25 @@ class ProfileScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Profile'),
       ),
-      body: Center(
-        child: userProfile.when(
-          data: (profile) => _ProfileContent(profile: profile),
-          loading: () => const CircularProgressIndicator(),
-          error: (error, stack) => ErrorText(error: error),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            transform: const GradientRotation(45),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.blue.withOpacity(0.4), // Sky blue
+              const Color.fromARGB(255, 37, 33, 243)
+                  .withOpacity(0.4), // Steel blue
+            ],
+          ),
+        ),
+        child: Center(
+          child: userProfile.when(
+            data: (profile) => _ProfileContent(profile: profile),
+            loading: () => const CircularProgressIndicator(),
+            error: (error, stack) => ErrorText(error: error),
+          ),
         ),
       ),
     );
@@ -34,16 +48,31 @@ class _ProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(42, 32, 0, 32),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _ProfileAvatar(iconUrl: profile.getIconURL()),
-          const SizedBox(width: 16),
-          _ProfileDetails(profile: profile),
-        ],
-      ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(42, 32, 0, 32),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _ProfileAvatar(iconUrl: profile.getIconURL()),
+              const SizedBox(width: 32),
+              _ProfileDetails(profile: profile),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.4),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -76,7 +105,6 @@ class _ProfileDetails extends StatelessWidget {
           profile.name,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 4.0),
         _StreakText(streak: profile.current_exercise_day_streak),
         const SizedBox(height: 4.0),
         _ProfileDivider(),
@@ -119,7 +147,7 @@ class _ProfileDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 1.0,
-      width: MediaQuery.of(context).size.width - 42 - 16 - 100,
+      width: MediaQuery.of(context).size.width - 42 - 32 - 100,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(

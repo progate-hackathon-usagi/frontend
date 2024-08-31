@@ -52,7 +52,7 @@ class _WaitingPageState extends State<WaitingPage> {
         .subscribe((status, error) async {
           if (status != RealtimeSubscribeStatus.subscribed) return;
 
-          final currentUser = new Participant(
+          final currentUser = Participant(
               user_id: supabase.auth.currentUser!.id,
               name: "user",
               iconUrl: "https://via.placeholder.com/350x350?text=sample");
@@ -105,28 +105,29 @@ class _WaitingPageState extends State<WaitingPage> {
             ),
           ),
           ElevatedButton(
-              onPressed: () {
-                // TODO: ラジオ体操の開始を broadcast
-                widget.channel.sendBroadcastMessage(
-                  event: "start",
-                  payload: {"message": "start"},
-                );
+            onPressed: () {
+              // TODO: ラジオ体操の開始を broadcast
+              widget.channel.sendBroadcastMessage(
+                event: "start",
+                payload: {"message": "start"},
+              );
 
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => RoomPage(channel: widget.channel),
-                  ),
-                );
-              },
-              child: const Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('ラジオ体操を始める'),
-                  const Text("(ルームに参加している全員が開始されます)",
-                      style: TextStyle(fontSize: 12)),
-                ],
-              )),
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => RoomPage(channel: widget.channel),
+                ),
+              );
+            },
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('ラジオ体操を始める'),
+                const Text("(ルームに参加している全員が開始されます)",
+                    style: TextStyle(fontSize: 12)),
+              ],
+            ),
+          ),
           const SizedBox(height: 20),
         ]),
       ),
