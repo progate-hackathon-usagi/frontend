@@ -22,6 +22,16 @@ class _RoomPageState extends State<RoomPage> {
         if (!mounted) return;
         setState(() {});
         _videoController.play();
+
+        // ビデオが終了した際の処理
+        _videoController.addListener(() {
+          if (_videoController.value.position >=
+              _videoController.value.duration) {
+            _videoController.pause();
+            _logExercise();
+            Navigator.pushNamed(context, "/finished");
+          }
+        });
       });
   }
 
