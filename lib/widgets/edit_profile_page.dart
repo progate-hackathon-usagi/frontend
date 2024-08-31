@@ -26,6 +26,62 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     _fetchUserProfile();
   }
 
+  void _uploadImage() async {
+    try {
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser!.id;
+
+      final storage = supabase.storage.from('icons');
+      final response = await storage.upload('$userId.png', _imageFile!,
+          fileOptions: const FileOptions(upsert: true));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _updateProfile() async {
+    final supabase = Supabase.instance.client;
+    final userId = supabase.auth.currentUser!.id;
+
+    try {
+      supabase.functions
+          .invoke("profile/$userId", method: HttpMethod.put, body: {
+        "id": userId,
+        "username": _nameController.text,
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _getImageOnCamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) {
+        return;
+      }
+
+      setState(() {
+        _imageFile = File(image.path);
+      });
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _getImageOnAlbum() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        return;
+      }
+      _imageFile = File(image.path);
+      print('画像の添付が成功しました');
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> _fetchUserProfile() async {
     final supabase = Supabase.instance.client;
     final userId = supabase.auth.currentUser!.id;
@@ -77,7 +133,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     );
   }
 
-  void _onSubmit() {
+  void _onSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -90,48 +146,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       _uploadImage();
     }
 
+    await _updateProfile();
     Navigator.pop(context, true);
-  }
-
-  void _uploadImage() async {
-    try {
-      final supabase = Supabase.instance.client;
-      final userId = supabase.auth.currentUser!.id;
-
-      final storage = supabase.storage.from('icons');
-      final response = await storage.upload('$userId.png', _imageFile!,
-          fileOptions: const FileOptions(upsert: true));
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> _getImageOnCamera() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) {
-        return;
-      }
-
-      setState(() {
-        _imageFile = File(image.path);
-      });
-    } on PlatformException catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> _getImageOnAlbum() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) {
-        return;
-      }
-      _imageFile = File(image.path);
-      print('画像の添付が成功しました');
-    } on PlatformException catch (e) {
-      print(e);
-    }
   }
 
   @override
