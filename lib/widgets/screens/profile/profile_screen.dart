@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/model/data/user_profile.dart';
+import 'package:frontend/widgets/screens/profile/callender_view.dart';
 import 'package:frontend/widgets/screens/profile/profile_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -62,14 +63,19 @@ class _ProfileContent extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.4),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
+          child: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.4),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                ),
               ),
-            ),
+              const CallenderView(),
+            ],
           ),
         ),
       ],
