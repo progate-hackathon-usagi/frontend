@@ -1,8 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/model/data/participant.dart';
 
-class ParticipantsNotifier extends StateNotifier<List<Participant>> {
-  ParticipantsNotifier() : super([]);
+final participantsProvider =
+    StateNotifierProvider<WaitingViewmodel, List<Participant>>((ref) {
+  return WaitingViewmodel();
+});
+
+class WaitingViewmodel extends StateNotifier<List<Participant>> {
+  WaitingViewmodel() : super([]);
 
   void addParticipant(Participant participant) {
     state = [...state, participant];
@@ -12,8 +17,3 @@ class ParticipantsNotifier extends StateNotifier<List<Participant>> {
     state = state.where((user) => user.user_id != id).toList();
   }
 }
-
-final participantsProvider =
-    StateNotifierProvider<ParticipantsNotifier, List<Participant>>((ref) {
-  return ParticipantsNotifier();
-});
