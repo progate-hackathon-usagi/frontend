@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:frontend/widgets/lobby_page.dart';
-import 'package:frontend/widgets/finished_page.dart';
-import 'package:frontend/widgets/signin/signin_page.dart';
+import 'package:gathercise/widgets/lobby_page.dart';
+import 'package:gathercise/widgets/finished_page.dart';
+import 'package:gathercise/widgets/signin/signin_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

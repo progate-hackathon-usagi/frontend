@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/widgets/lobby_page.dart';
-import 'package:frontend/widgets/signin/signin_viewmodel.dart';
+import 'package:gathercise/widgets/lobby_page.dart';
+import 'package:gathercise/widgets/signin/signin_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;

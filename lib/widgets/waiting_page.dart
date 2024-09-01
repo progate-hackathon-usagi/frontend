@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/model/data/participant.dart';
-import 'package:frontend/model/data/user_profile.dart';
-import 'package:frontend/widgets/room_page.dart';
+import 'package:gathercise/model/data/participant.dart';
+import 'package:gathercise/model/data/user_profile.dart';
+import 'package:gathercise/widgets/room_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WaitingPage extends ConsumerStatefulWidget {

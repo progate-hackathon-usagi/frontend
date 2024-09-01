@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/utils/date_time_ext.dart';
-import 'package:frontend/widgets/screens/profile/profile_viewmodel.dart';
+import 'package:gathercise/utils/date_time_ext.dart';
+import 'package:gathercise/widgets/screens/profile/profile_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:frontend/model/data/exercise_logs_response.dart';
+import 'package:gathercise/model/data/exercise_logs_response.dart';
 
 class CalendarView extends StatelessWidget {
   const CalendarView({super.key});

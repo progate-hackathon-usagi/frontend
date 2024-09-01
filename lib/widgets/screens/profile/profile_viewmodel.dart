@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/model/data/exercise_logs_response.dart';
-import 'package:frontend/model/data/user_profile.dart';
+import 'package:gathercise/model/data/exercise_logs_response.dart';
+import 'package:gathercise/model/data/user_profile.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/profile_viewmodel.freezed.dart';

@@ -1,6 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/lobby_page.dart';
+import 'package:gathercise/widgets/lobby_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

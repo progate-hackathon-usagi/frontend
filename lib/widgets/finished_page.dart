@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/daily_check_list.dart';
-import 'package:frontend/widgets/lobby_page.dart';
+import 'package:gathercise/widgets/daily_check_list.dart';
+import 'package:gathercise/widgets/lobby_page.dart';
 
 class FinishedPage extends StatelessWidget {
   const FinishedPage({super.key});

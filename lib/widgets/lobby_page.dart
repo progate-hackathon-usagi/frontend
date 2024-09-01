@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/screens/home_screen.dart';
-import 'package:frontend/widgets/screens/profile/profile_screen.dart';
+import 'package:gathercise/widgets/screens/home_screen.dart';
+import 'package:gathercise/widgets/screens/profile/profile_screen.dart';
 
 class LobbyPage extends StatefulWidget {
   const LobbyPage({Key? key}) : super(key: key);
