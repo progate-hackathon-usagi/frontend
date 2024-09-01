@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/daily_check_list.dart';
 import 'package:frontend/widgets/lobby_page.dart';
