@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/model/data/participant.dart';
 import 'package:frontend/model/data/user_profile.dart';
 import 'package:frontend/widgets/room_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class WaitingPage extends StatefulWidget {
+class WaitingPage extends ConsumerStatefulWidget {
   final RealtimeChannel channel;
   const WaitingPage({super.key, required context, required this.channel});
 
@@ -12,31 +13,29 @@ class WaitingPage extends StatefulWidget {
   _WaitingPageState createState() => _WaitingPageState();
 }
 
-class _WaitingPageState extends State<WaitingPage> {
-  final List<Participant> _participants = [];
-
+class _WaitingPageState extends ConsumerState<WaitingPage> {
   @override
   void initState() {
     super.initState();
 
     final supabase = Supabase.instance.client;
 
-    // イベントリスナを登録
+    // 参加イベント時の処理
     widget.channel
-        // 参加イベント時の処理
         .onPresenceJoin((payload) {
+          final participants = ref.watch(participantsProvider);
           final newUserId = payload.newPresences.first.payload['user_id'];
-          if (_participants.any((user) => user.user_id == newUserId)) return;
+          if (participants.any((user) => user.user_id == newUserId)) return;
 
           final participant =
               Participant.fromJson(payload.newPresences.first.payload);
-          _joinParticipant(participant);
+          ref.read(participantsProvider.notifier).addParticipant(participant);
         })
 
         // 退室イベント時の処理
         .onPresenceLeave((payload) {
           final leftUserId = payload.leftPresences.first.payload['user_id'];
-          _removeUser(leftUserId);
+          ref.read(participantsProvider.notifier).removeParticipant(leftUserId);
         })
 
         // イベントの開始を通知
@@ -61,27 +60,14 @@ class _WaitingPageState extends State<WaitingPage> {
 
           final currentUser = Participant(
               user_id: userId, name: profile.name, iconUrl: iconUrl);
-
-          final presenceTrackStatus =
-              await widget.channel.track(currentUser.toJson());
-          _joinParticipant(currentUser);
+          await widget.channel.track(currentUser.toJson());
+          ref.read(participantsProvider.notifier).addParticipant(currentUser);
         });
-  }
-
-  void _joinParticipant(Participant user) {
-    setState(() {
-      _participants.add(user);
-    });
-  }
-
-  void _removeUser(String id) {
-    setState(() {
-      _participants.removeWhere((user) => user.user_id == id);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final participants = ref.watch(participantsProvider);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -97,9 +83,9 @@ class _WaitingPageState extends State<WaitingPage> {
           const Text("参加者"),
           Expanded(
             child: ListView.builder(
-              itemCount: _participants.length,
+              itemCount: participants.length,
               itemBuilder: (context, index) {
-                final participant = _participants[index];
+                final participant = participants[index];
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(participant.iconUrl),
@@ -111,7 +97,6 @@ class _WaitingPageState extends State<WaitingPage> {
           ),
           ElevatedButton(
               onPressed: () {
-                // TODO: ラジオ体操の開始を broadcast
                 widget.channel.sendBroadcastMessage(
                   event: "start",
                   payload: {"message": "start"},
@@ -121,9 +106,8 @@ class _WaitingPageState extends State<WaitingPage> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('ラジオ体操を始める'),
-                  const Text("(ルームに参加している全員が開始されます)",
-                      style: TextStyle(fontSize: 12)),
+                  Text('ラジオ体操を始める'),
+                  Text("(ルームに参加している全員が開始されます)", style: TextStyle(fontSize: 12)),
                 ],
               )),
           const SizedBox(height: 20),

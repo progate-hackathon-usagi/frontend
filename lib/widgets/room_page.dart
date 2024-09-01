@@ -1,8 +1,10 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/model/data/participant.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:video_player/video_player.dart';
 
-class RoomPage extends StatefulWidget {
+class RoomPage extends ConsumerStatefulWidget {
   final RealtimeChannel channel;
 
   const RoomPage({super.key, required this.channel});
@@ -11,35 +13,34 @@ class RoomPage extends StatefulWidget {
   _RoomPageState createState() => _RoomPageState();
 }
 
-class _RoomPageState extends State<RoomPage> {
-  late AudioCache _audioCache;
-  late AudioPlayer _audioPlayer;
+class _RoomPageState extends ConsumerState<RoomPage> {
+  late VideoPlayerController _videoController;
 
   @override
   void initState() {
     super.initState();
-    _audioCache = AudioCache(prefix: "assets/audio/");
-    _audioPlayer = AudioPlayer();
+    _videoController = VideoPlayerController.asset("assets/video/exercise.mp4")
+      ..initialize().then((_) {
+        if (!mounted) return;
+        setState(() {});
+        _videoController.play();
+
+        // ビデオが終了した際の処理
+        _videoController.addListener(() {
+          if (_videoController.value.position >=
+              _videoController.value.duration) {
+            _videoController.pause();
+            _logExercise();
+            Navigator.pushNamed(context, "/finished");
+          }
+        });
+      });
   }
 
   @override
   void dispose() {
-    _stop();
-    _audioPlayer.dispose();
+    _videoController.dispose();
     super.dispose();
-  }
-
-  void _play() async {
-    try {
-      final url = "audio/exercise.mp3";
-      await _audioPlayer.play(AssetSource(url));
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
-
-  void _stop() async {
-    await _audioPlayer.stop();
   }
 
   void _logExercise() async {
@@ -52,22 +53,54 @@ class _RoomPageState extends State<RoomPage> {
 
   @override
   Widget build(BuildContext context) {
-    _play();
-    _audioPlayer.onPlayerComplete.listen((event) {
-      _logExercise();
-      if (!context.mounted) return;
-      Navigator.pushNamed(context, "/finished");
-    });
+    final participants = ref.watch(participantsProvider);
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        body: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          const Text("ここにいい感じのガイドを表示する"),
+          Column(
+            children: [
+              AspectRatio(
+                  aspectRatio: _videoController.value.aspectRatio,
+                  child: VideoPlayer(_videoController)),
+              VideoProgressIndicator(_videoController, allowScrubbing: false)
+            ],
+          ),
+
+          // 参加者一覧
+          Expanded(
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4, // 一列に4人表示
+              ),
+              itemCount: participants.length,
+              itemBuilder: (context, index) {
+                final participant = participants[index];
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(participant.iconUrl),
+                      radius: 30,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(participant.name,
+                        style: const TextStyle(fontSize: 12)),
+                  ],
+                );
+              },
+            ),
+          ),
+
           Center(
             child: ElevatedButton(
               onPressed: () async {
-                _stop();
+                _videoController.pause();
                 _logExercise();
                 await widget.channel.untrack();
 
@@ -80,6 +113,6 @@ class _RoomPageState extends State<RoomPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
