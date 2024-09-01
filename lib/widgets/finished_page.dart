@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/lobby_page.dart';
+import 'package:frontend/widgets/screens/profile/calendar_view.dart';
 
 class FinishedPage extends StatelessWidget {
   const FinishedPage({super.key});
@@ -10,7 +11,7 @@ class FinishedPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text("ここにいい感じのラジオ体操カード"),
+          CalendarView()
           Center(
             child: ElevatedButton(
               onPressed: () {

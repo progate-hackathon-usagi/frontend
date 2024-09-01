@@ -4,8 +4,8 @@ import 'package:frontend/utils/date_time_ext.dart';
 import 'package:frontend/widgets/screens/profile/profile_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class CalenderView extends StatelessWidget {
-  const CalenderView({super.key});
+class CalendarView extends StatelessWidget {
+  const CalendarView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,9 @@ class CalenderView extends StatelessWidget {
       padding: EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _CalenderHeader(),
+          _CalendarHeader(),
           Expanded(
-            child: _CalenderBody(),
+            child: _CalendarBody(),
           ),
         ],
       ),
@@ -23,8 +23,8 @@ class CalenderView extends StatelessWidget {
   }
 }
 
-class _CalenderHeader extends ConsumerWidget {
-  const _CalenderHeader();
+class _CalendarHeader extends ConsumerWidget {
+  const _CalendarHeader();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,8 +56,8 @@ class _CalenderHeader extends ConsumerWidget {
   }
 }
 
-class _CalenderBody extends StatelessWidget {
-  const _CalenderBody();
+class _CalendarBody extends StatelessWidget {
+  const _CalendarBody();
 
   @override
   Widget build(BuildContext context) {
