@@ -33,25 +33,28 @@ class ProfileScreen extends ConsumerWidget {
             ),
           ],
         ),
-        body: Column(children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                transform: const GradientRotation(45),
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.blue.withOpacity(0.4), // Sky blue
-                  const Color.fromARGB(255, 37, 33, 243)
-                      .withOpacity(0.4), // Steel blue
-                ],
+        body: Column(mainAxisSize: MainAxisSize.min, children: [
+          Flexible(
+            fit: FlexFit.loose,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  transform: const GradientRotation(45),
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.blue.withOpacity(0.4), // Sky blue
+                    const Color.fromARGB(255, 37, 33, 243)
+                        .withOpacity(0.4), // Steel blue
+                  ],
+                ),
               ),
-            ),
-            child: Center(
-              child: userProfile.when(
-                data: (state) => _ProfileContent(profile: state.userProfile!),
-                loading: () => const CircularProgressIndicator(),
-                error: (error, stack) => ErrorText(error: error),
+              child: Center(
+                child: userProfile.when(
+                  data: (state) => _ProfileContent(profile: state.userProfile!),
+                  loading: () => const CircularProgressIndicator(),
+                  error: (error, stack) => ErrorText(error: error),
+                ),
               ),
             ),
           ),
