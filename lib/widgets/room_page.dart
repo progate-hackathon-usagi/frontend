@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/model/data/participant.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:video_player/video_player.dart';
 
-class RoomPage extends StatefulWidget {
+class RoomPage extends ConsumerStatefulWidget {
   final RealtimeChannel channel;
 
   const RoomPage({super.key, required this.channel});
@@ -11,7 +13,7 @@ class RoomPage extends StatefulWidget {
   _RoomPageState createState() => _RoomPageState();
 }
 
-class _RoomPageState extends State<RoomPage> {
+class _RoomPageState extends ConsumerState<RoomPage> {
   late VideoPlayerController _videoController;
 
   @override
@@ -51,6 +53,8 @@ class _RoomPageState extends State<RoomPage> {
 
   @override
   Widget build(BuildContext context) {
+    final participants = ref.watch(participantsProvider);
+
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
@@ -65,6 +69,34 @@ class _RoomPageState extends State<RoomPage> {
               VideoProgressIndicator(_videoController, allowScrubbing: false)
             ],
           ),
+
+          // 参加者一覧
+          Expanded(
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4, // 一列に4人表示
+              ),
+              itemCount: participants.length,
+              itemBuilder: (context, index) {
+                final participant = participants[index];
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(participant.iconUrl),
+                      radius: 30,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(participant.name,
+                        style: const TextStyle(fontSize: 12)),
+                  ],
+                );
+              },
+            ),
+          ),
+
           Center(
             child: ElevatedButton(
               onPressed: () async {
