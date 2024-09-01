@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/daily_check_list.dart';
 import 'package:frontend/widgets/lobby_page.dart';
-import 'package:frontend/widgets/screens/profile/calendar_view.dart';
 
 class FinishedPage extends StatelessWidget {
   const FinishedPage({super.key});
@@ -11,7 +13,13 @@ class FinishedPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          CalendarView()
+          const Text(
+            "スタンプ獲得！",
+            style: TextStyle(
+                color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          DailyCheckList(isExercisedList: List.generate(31, (index) => false)),
           Center(
             child: ElevatedButton(
               onPressed: () {

@@ -15,46 +15,47 @@ class ProfileScreen extends ConsumerWidget {
     final userProfile = ref.watch(profileViewModelProvider(userId));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () async {
-              final result = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => EditProfilePage(),
-                ),
-              );
-              if (result == true) {
-                ref.refresh(profileViewModelProvider(userId));
-              }
-            },
-          ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            transform: const GradientRotation(45),
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.blue.withOpacity(0.4), // Sky blue
-              const Color.fromARGB(255, 37, 33, 243)
-                  .withOpacity(0.4), // Steel blue
-            ],
-          ),
+        appBar: AppBar(
+          title: const Text('Profile'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () async {
+                final result = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => EditProfilePage(),
+                  ),
+                );
+                if (result == true) {
+                  ref.refresh(profileViewModelProvider(userId));
+                }
+              },
+            ),
+          ],
         ),
-        child: Center(
-          child: userProfile.when(
-            data: (state) => _ProfileContent(profile: state.userProfile!),
-            loading: () => const CircularProgressIndicator(),
-            error: (error, stack) => ErrorText(error: error),
+        body: Column(children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                transform: const GradientRotation(45),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.blue.withOpacity(0.4), // Sky blue
+                  const Color.fromARGB(255, 37, 33, 243)
+                      .withOpacity(0.4), // Steel blue
+                ],
+              ),
+            ),
+            child: Center(
+              child: userProfile.when(
+                data: (state) => _ProfileContent(profile: state.userProfile!),
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => ErrorText(error: error),
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ]));
   }
 }
 
