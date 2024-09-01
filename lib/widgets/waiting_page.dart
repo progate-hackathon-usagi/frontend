@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/model/data/participant.dart';
+import 'package:frontend/model/data/user_profile.dart';
 import 'package:frontend/widgets/room_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -53,11 +54,12 @@ class _WaitingPageState extends ConsumerState<WaitingPage> {
         .subscribe((status, error) async {
           if (status != RealtimeSubscribeStatus.subscribed) return;
 
-          final currentUser = Participant(
-              user_id: supabase.auth.currentUser!.id,
-              name: "user",
-              iconUrl: "https://via.placeholder.com/350x350?text=sample");
+          final userId = supabase.auth.currentUser!.id;
+          final profile = await UserProfile.fetch(userId);
+          final iconUrl = profile.getIconURL();
 
+          final currentUser = Participant(
+              user_id: userId, name: profile.name, iconUrl: iconUrl);
           await widget.channel.track(currentUser.toJson());
           ref.read(participantsProvider.notifier).addParticipant(currentUser);
         });
