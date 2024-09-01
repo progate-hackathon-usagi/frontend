@@ -56,8 +56,16 @@ class HomeScreen extends StatelessWidget {
               ),
               child: ElevatedButton(
                   onPressed: () {
-                    // Add your action here
-                    print('CTA button pressed!');
+                    final supabase = Supabase.instance.client;
+                    final roomId = 'room1';
+                    final channel = supabase.channel(roomId,
+                        opts: const RealtimeChannelConfig(self: true));
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              WaitingPage(context: context, channel: channel)),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(149, 9, 98, 199),
@@ -87,31 +95,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ])),
             ),
-
-            // child: ElevatedButton(
-            //   onPressed: () {
-            //     final supabase = Supabase.instance.client;
-            //     final roomId = 'room1';
-            //     final channel = supabase.channel(roomId,
-            //         opts: const RealtimeChannelConfig(self: true));
-
-            //     Navigator.of(context).push(
-            //       MaterialPageRoute(
-            //           builder: (context) =>
-            //               WaitingPage(context: context, channel: channel)),
-            //     );
-            //   },
-            //   child: const Column(
-            //     mainAxisSize: MainAxisSize.min,
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: <Widget>[
-            //       Text('ラジオ体操に', style: headingTextStyle),
-            //       Text("参加する", style: headingTextStyle),
-            //       SizedBox(height: 20),
-            //       Text('212人が参加中...'),
-            //     ],
-            //   ),
-            // ),
           ),
         ));
   }
