@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/model/data/user_profile.dart';
 import 'package:frontend/widgets/edit_profile_page.dart';
-import 'package:frontend/widgets/screens/profile/calender_view.dart';
+import 'package:frontend/widgets/screens/profile/calendar_view.dart';
 import 'package:frontend/widgets/screens/profile/profile_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,46 +15,50 @@ class ProfileScreen extends ConsumerWidget {
     final userProfile = ref.watch(profileViewModelProvider(userId));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () async {
-              final result = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => EditProfilePage(),
+        appBar: AppBar(
+          title: const Text('Profile'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () async {
+                final result = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => EditProfilePage(),
+                  ),
+                );
+                if (result == true) {
+                  ref.refresh(profileViewModelProvider(userId));
+                }
+              },
+            ),
+          ],
+        ),
+        body: Column(mainAxisSize: MainAxisSize.min, children: [
+          Flexible(
+            fit: FlexFit.loose,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  transform: const GradientRotation(45),
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.blue.withOpacity(0.4), // Sky blue
+                    const Color.fromARGB(255, 37, 33, 243)
+                        .withOpacity(0.4), // Steel blue
+                  ],
                 ),
-              );
-              if (result == true) {
-                ref.refresh(profileViewModelProvider(userId));
-              }
-            },
+              ),
+              child: Center(
+                child: userProfile.when(
+                  data: (state) => _ProfileContent(profile: state.userProfile!),
+                  loading: () => const CircularProgressIndicator(),
+                  error: (error, stack) => ErrorText(error: error),
+                ),
+              ),
+            ),
           ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            transform: const GradientRotation(45),
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.blue.withOpacity(0.4), // Sky blue
-              const Color.fromARGB(255, 37, 33, 243)
-                  .withOpacity(0.4), // Steel blue
-            ],
-          ),
-        ),
-        child: Center(
-          child: userProfile.when(
-            data: (state) => _ProfileContent(profile: state.userProfile!),
-            loading: () => const CircularProgressIndicator(),
-            error: (error, stack) => ErrorText(error: error),
-          ),
-        ),
-      ),
-    );
+        ]));
   }
 }
 
@@ -90,7 +94,7 @@ class _ProfileContent extends StatelessWidget {
                   ),
                 ),
               ),
-              const CalenderView(),
+              const CalendarView(),
             ],
           ),
         ),
